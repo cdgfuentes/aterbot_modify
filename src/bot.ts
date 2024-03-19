@@ -1,8 +1,7 @@
 import Mineflayer from 'mineflayer';
 import { sleep, getRandom } from "./utils.ts";
 import CONFIG from "../config.json" assert {type: 'json'};
-import { pathfinder, Movements, goals } from 'mineflayer-pathfinder';
-
+import { pathfinder, Movements, goals, GoalNear } from 'mineflayer-pathfinder';
 
 let loop: NodeJS.Timeout;
 let bot: Mineflayer.Bot;
@@ -137,7 +136,7 @@ const createBot = (): void => {
 			const p = target.position
 	
 			bot.pathfinder.setMovements(defaultMove)
-			bot.pathfinder.setGoal(new GoalNear(p.x, p.y, p.z, 1))
+			bot.pathfinder.setGoal(new Goal(p.x, p.y, p.z, 1))
 	 }
 	} catch (error) {
 	  console.error('Error creating bot:', error);
