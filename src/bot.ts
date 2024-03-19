@@ -72,10 +72,10 @@ const createBot = (): void => {
 		if (username === bot.username) return
 		switch (message) {
 		  case 'sleep':
-			goToSleep()
+			bot.chat('sleeping...')
 			break
 		  case 'wakeup':
-			wakeUp()
+			bot.chat('wakeup...')
 			break
 		}
 	  })
