@@ -132,6 +132,8 @@ const createBot = (): void => {
 		   bot.collectBlock.collect(block, err => {
 			if (err) bot.chat(err.message)
 		  })
+		}catch{
+			
 		}
 	  });
 	  
