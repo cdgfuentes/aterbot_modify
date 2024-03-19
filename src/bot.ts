@@ -8,7 +8,7 @@ import mcData from 'minecraft-data';
 
 let loop: NodeJS.Timeout;
 let bot: Mineflayer.Bot;
-
+let data;
 const disconnect = (): void => {
 	clearInterval(loop);
 	bot?.quit?.();
@@ -53,7 +53,7 @@ const createBot = (): void => {
 	  // Listen for the 'spawn' event
 	  bot.once('spawn', () => {
 		defaultMove = new Movements(bot)
-		const data = mcData(bot.version);
+		data = mcData(bot.version);
 		//console.log('===data===',data);
 		bot.collectBlock.chestLocations = bot.findBlocks({
 			matching: data.blocksByName.chest.id,
@@ -153,7 +153,7 @@ const createBot = (): void => {
 		}
 
 		bot.collectBlock.collect(targets)
-		
+
 	  });
 	  
 	  async function goToSleep () {
