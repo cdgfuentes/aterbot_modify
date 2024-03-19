@@ -69,8 +69,7 @@ const createBot = (): void => {
 	});
 
 	bot.on('chat', (username, message) => {
-		if (username === bot.username) return
-		if(message === 'test') bot.chat("Hello!") 
+		if(message === 'test') bot.chat("Hello!")
 	  })
 };
 
