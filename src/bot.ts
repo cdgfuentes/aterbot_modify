@@ -153,6 +153,7 @@ const createBot = (): void => {
 			if (target) {			
 			return
 			}
+			bot.pathfinder.setGoal(null)
 	 }
 	} catch (error) {
 	  console.error('Error creating bot:', error);
