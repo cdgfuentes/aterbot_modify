@@ -7,7 +7,7 @@ import { plugin as collectBlock } from 'mineflayer-collectblock';
 
 let loop: NodeJS.Timeout;
 let bot: Mineflayer.Bot;
-
+let mcData;
 
 const disconnect = (): void => {
 	clearInterval(loop);
@@ -55,7 +55,7 @@ const createBot = (): void => {
 		defaultMove = new Movements(bot)
 		
 		bot.collectBlock.chestLocations = bot.findBlocks({
-			matching: 54,
+			matching: mcData.blocksByName.chest.id,
 			maxDistance: 16,
 			count: 999999 // Get as many chests as we can
 		  })
@@ -94,6 +94,7 @@ const createBot = (): void => {
   
 	  bot.once('login', () => {
 		console.log(`AFKBot logged in ${bot.username}\n\n`);
+		mcData = require('minecraft-data')(bot.version)
 	  });
   
 	  // Listen for chat messages
