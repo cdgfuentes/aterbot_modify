@@ -8,7 +8,7 @@ import mcData from 'minecraft-data';
 import axios from 'axios';
 import openai from 'openai'
 
-openai.apiKey = "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";
+openai.apiKey = CONFIG.api_key;
 
 let loop: NodeJS.Timeout;
 let bot: Mineflayer.Bot;
