@@ -92,6 +92,9 @@ const createBot = (): void => {
 		  case 'wakeup':
 			bot.chat('wakeup...');
 			break;
+		  case 'a':
+			bot.chat('lag');
+			break;
 		}
 	  });
 	} catch (error) {
