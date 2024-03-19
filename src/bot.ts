@@ -1,11 +1,12 @@
 import Mineflayer from 'mineflayer';
 import { sleep, getRandom } from "./utils.ts";
 import CONFIG from "../config.json" assert {type: 'json'};
-const { pathfinder, Movements, goals } = require('mineflayer-pathfinder');
+import { pathfinder, Movements, goals } from 'mineflayer-pathfinder';
 
 
 let loop: NodeJS.Timeout;
 let bot: Mineflayer.Bot;
+bot.loadPlugin(pathfinder)
 
 const disconnect = (): void => {
 	clearInterval(loop);
