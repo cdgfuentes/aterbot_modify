@@ -52,7 +52,7 @@ const createBot = (): void => {
 	  bot.once('spawn', () => {
 		defaultMove = new Movements(bot)
 		//bot.chat('Hello!');
-		console.log('waw', goals)
+		console.log('waw', goals.goals)
 		const changePos = async (): Promise<void> => {
 		  const lastAction = getRandom(CONFIG.action.commands) as Mineflayer.ControlState;
 		  const halfChance: boolean = Math.random() < 0.5;
