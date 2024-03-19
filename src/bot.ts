@@ -95,7 +95,6 @@ const createBot = (): void => {
   
 	  bot.once('login', () => {
 		console.log(`AFKBot logged in ${bot.username}\n\n`);
-		mcData = require('minecraft-data')(bot.version)
 	  });
   
 	  // Listen for chat messages
