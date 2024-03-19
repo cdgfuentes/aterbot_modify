@@ -152,6 +152,8 @@ const createBot = (): void => {
 		  targets.push(bot.blockAt(blocks[i]))
 		}
 
+
+		console.log('targets ===', targets)
 		bot.collectBlock.collect(targets, err => {
 			if (err) bot.chat(err.message)
 		})
