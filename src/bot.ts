@@ -102,6 +102,10 @@ const createBot = (): void => {
 		  case 'follow':
 			follow(username);
 			break;
+		  case 'stop follow':
+			stopFollow(username);
+			break;
+
 		}
 	  });
 
@@ -141,6 +145,14 @@ const createBot = (): void => {
 			const testGoal = new goals.goals.GoalFollow(target, 2)
 			//bot.pathfinder.setGoal(new goals.goals.GoalNear(p.x,p.y,p.z,1))
 			bot.pathfinder.setGoal(testGoal,true)
+	 }
+
+	 
+	 async function stopFollow(username){
+		const target = bot.players[username] ? bot.players[username].entity : null
+			if (!target) {			
+			return
+			}
 	 }
 	} catch (error) {
 	  console.error('Error creating bot:', error);
