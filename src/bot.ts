@@ -61,14 +61,12 @@ const createBot = (): void => {
 			count: 999999 // Get as many chests as we can
 		  })
 		  if (bot.collectBlock.chestLocations.length === 0) {
-			bot.chat("No chests nearby.")
+			bot.chat("I don't see any chests nearby.")
 		  } else {
 			for (const chestPos of bot.collectBlock.chestLocations) {
 			  bot.chat(`I found a chest at ${chestPos}`)
 			}
 		  }
-		})
-		
 		//bot.chat('Hello!');
 		console.log('waw', goals.goals)
 		const changePos = async (): Promise<void> => {
