@@ -69,6 +69,7 @@ const createBot = (): void => {
 	});
 
 	bot.on('chat', (username, message) => {
+		console.log("chat triggered");
 		if(message === 'test') bot.chat("Hello!")
 	  })
 };
