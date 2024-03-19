@@ -69,8 +69,15 @@ const createBot = (): void => {
 	});
 
 	bot.on('chat', (username, message) => {
-		console.log("chat triggered");
-		if(message === 'test') bot.chat("Hello!")
+		if (username === bot.username) return
+		switch (message) {
+		  case 'sleep':
+			goToSleep()
+			break
+		  case 'wakeup':
+			wakeUp()
+			break
+		}
 	  })
 };
 
