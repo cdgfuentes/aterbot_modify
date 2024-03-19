@@ -54,19 +54,13 @@ const createBot = (): void => {
 	  bot.once('spawn', () => {
 		defaultMove = new Movements(bot)
 		data = mcData(bot.version);
-		//console.log('===data===',data);
-		bot.collectBlock.chestLocations = bot.findBlock({
+
+		bot.collectBlock.chestLocations = bot.findBlocks({
 			matching: data.blocksByName.chest.id,
 			maxDistance: 16,
 			count: 999999 // Get as many chests as we can
 		  })
-		  if (bot.collectBlock.chestLocations.length === 0) {
-			bot.chat("I don't see any chests nearby.")
-		  } else {
-			for (const chestPos of bot.collectBlock.chestLocations) {
-			  bot.chat(`I found a chest at ${chestPos}`)
-			}
-		  }
+
 		//bot.chat('Hello!');
 		console.log('waw', goals.goals)
 		const changePos = async (): Promise<void> => {
@@ -160,6 +154,7 @@ const createBot = (): void => {
 
 
 		console.log('targets ===', targets)
+		bot.chat(`Found ${targets.length} ${type}(s)`)
 		bot.collectBlock.collect(targets, err => {
 			if (err) bot.chat(err.message)
 		})
