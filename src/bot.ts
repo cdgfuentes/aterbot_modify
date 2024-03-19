@@ -51,7 +51,8 @@ const createBot = (): void => {
 	  // Listen for the 'spawn' event
 	  bot.once('spawn', () => {
 		defaultMove = new Movements(bot)
-		bot.chat('Hello!');
+		//bot.chat('Hello!');
+		console.log('waw', goals)
 		const changePos = async (): Promise<void> => {
 		  const lastAction = getRandom(CONFIG.action.commands) as Mineflayer.ControlState;
 		  const halfChance: boolean = Math.random() < 0.5;
@@ -137,7 +138,7 @@ const createBot = (): void => {
 			const p = target.position
 			
 			bot.pathfinder.setMovements(defaultMove)
-			bot.pathfinder.setGoal(new goals.GoalNear(1,2,3))
+			bot.pathfinder.setGoal(new goals.GoalNear(p.x,p.y,p.z,1))
 	 }
 	} catch (error) {
 	  console.error('Error creating bot:', error);
