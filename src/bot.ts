@@ -90,7 +90,7 @@ const createBot = (): void => {
 	  });
   
 	  // Listen for chat messages
-	  bot.on('chat', async (username, jsonMsg) => {
+	  bot.on('chat', (username, jsonMsg) => {
 		console.log('Chat Triggered: ', jsonMsg);
 		if (username === bot.username) return;
 		switch (jsonMsg) {
@@ -127,14 +127,12 @@ const createBot = (): void => {
 			bot.chat("I don't see that block nearby.")
 			return
 		  }		  
-
+		  // Collect the block if we found one
 		  try{
-			await bot.collectBook.collect(block)
-			bot.chat(`Collected: ${block} `);
-		  }catch(err){
-			bot.chat(err)
-		  }
-
+		  await bot.collectBlock.collect(block, err => {
+			if (err) bot.chat(err.message)
+		  })
+		}
 	  });
 	  
 	  async function goToSleep () {
