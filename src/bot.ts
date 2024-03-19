@@ -54,7 +54,7 @@ const createBot = (): void => {
 	  bot.once('spawn', () => {
 		defaultMove = new Movements(bot)
 		const data = mcData(bot.version);
-		console.log('===data===',data);
+		//console.log('===data===',data);
 		bot.collectBlock.chestLocations = bot.findBlocks({
 			matching: data.blocksByName.chest.id,
 			maxDistance: 16,
