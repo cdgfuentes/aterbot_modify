@@ -118,27 +118,42 @@ const createBot = (): void => {
 		const args = jsonMsg.split(' ')
 		if (args[0] !== 'collect') return
 
-		const blockType = bot.registry.blocksByName[args[1]]
+		// If the player specifies a number, collect that many. Otherwise, default to 1.
+		let count = 1
+		if (args.length === 3) count = parseInt(args[1])
+	  
+		// If a number was given the item number is the 3rd arg, not the 2nd.
+		let type = args[1]
+		if (args.length === 3) type = args[2]
+	  
+		// Get the id of that block type for this version of Minecraft.
+		const blockType = data.blocksByName[type]
 		if (!blockType) {
-		  bot.chat("I don't know any blocks with that name.")
+		  bot.chat(`I don't know any blocks named ${type}.`)
 		  return
 		}
-		bot.chat('Collecting the nearest ' + blockType.name)
+	  
+		// Find all nearby blocks of that type, up to the given count, within 64 blocks.
+		const blocks = bot.findBlocks({
+		  matching: blockType.id,
+		  maxDistance: 64,
+		  count: count
+		})
+	  
+		// Complain if we can't find any nearby blocks of that type.
+		if (blocks.length === 0) {
+		  bot.chat("I don't see that block nearby.")
+		  return
+		}
+	  
+		// Convert the block position array into a block array to pass to collect block.
+		const targets = []
+		for (let i = 0; i < Math.min(blocks.length, count); i++) {
+		  targets.push(bot.blockAt(blocks[i]))
+		}
 
-		  // Try and find that block type in the world
-		  const block = bot.findBlock({
-			matching: blockType.id,
-			maxDistance: 64
-		  })
+		bot.collectBlock.collect(targets)
 		
-		  if (!block) {
-			bot.chat("I don't see that block nearby.")
-			return
-		  }		  
-		  // Collect the block if we found one
-		   bot.collectBlock.collect(blockType.name, err => {
-			if (err) bot.chat(err.message)
-		  })	
 	  });
 	  
 	  async function goToSleep () {
