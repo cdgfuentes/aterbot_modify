@@ -1,6 +1,8 @@
 import Mineflayer from 'mineflayer';
 import { sleep, getRandom } from "./utils.ts";
 import CONFIG from "../config.json" assert {type: 'json'};
+const { pathfinder, Movements, goals } = require('mineflayer-pathfinder');
+
 
 let loop: NodeJS.Timeout;
 let bot: Mineflayer.Bot;
@@ -46,6 +48,8 @@ const createBot = (): void => {
   
 	  // Listen for the 'spawn' event
 	  bot.once('spawn', () => {
+		const defaultMove = new Movements(bot)
+
 		const changePos = async (): Promise<void> => {
 		  const lastAction = getRandom(CONFIG.action.commands) as Mineflayer.ControlState;
 		  const halfChance: boolean = Math.random() < 0.5;
@@ -86,15 +90,18 @@ const createBot = (): void => {
 		//if (username === bot.username) return;
 		console.log('bbb');
 		switch (jsonMsg) {
-		  case 'sleep':
-			bot.chat('sleeping...');
+		  case 'sleep':			
 			goToSleep();
 			break;
 		  case 'wakeup':
-			bot.chat('wakeup...');
+			wakeUp();
+			break;		
+		  case 'follow':
+			follow();
 			break;
 		}
 	  });
+
 
 	  async function goToSleep () {
 		const bed = bot.findBlock({
@@ -105,15 +112,31 @@ const createBot = (): void => {
 			await bot.sleep(bed)
 			bot.chat("I'm sleeping")
 		  } catch (err) {
-			bot.chat(`I can't sleep: ${err.message}`)
+			bot.chat(`I can't sleep, ${err.message}`)
 		  }
 		} else {
 		  bot.chat('No nearby bed')
 		}
 	  }
+	  async function wakeUp () {
+		try {
+		  await bot.wake()
+		} catch (err) {
+		  bot.chat(`I can't wake up, ${err.message}`)
+		}
+	  }
 
-
-
+	  async function follow(){
+		const target = bot.players[username] ? bot.players[username].entity : null
+			if (!target) {
+			bot.chat('I cant see you')
+			return
+			}
+			const p = target.position
+	
+			bot.pathfinder.setMovements(defaultMove)
+			bot.pathfinder.setGoal(new GoalNear(p.x, p.y, p.z, 1))
+	 }
 	} catch (error) {
 	  console.error('Error creating bot:', error);
 	  // You might want to handle this error appropriately
