@@ -6,9 +6,6 @@ import goals from 'mineflayer-pathfinder';
 import { plugin as collectBlock } from 'mineflayer-collectblock';
 import mcData from 'minecraft-data';
 import axios from 'axios';
-import openai from 'openai'
-
-openai.apiKey = CONFIG.api_key;
 
 let loop: NodeJS.Timeout;
 let bot: Mineflayer.Bot;
@@ -95,14 +92,7 @@ const createBot = (): void => {
 	  bot.on('chat', async (username, jsonMsg) => {
 		console.log('Chat Triggered: ', jsonMsg);
 		if (username === bot.username) return;
-		if (jsonMsg.endsWith('??')) {
-			const completion = await openai.chat.completions.create({
-				messages: [{ role: 'system', content: jsonMsg }],
-				model: 'gpt-3.5-turbo',
-			  });
-			  const response = completion.data.choices[0].message.content;
-			  console.log(response); // Send the response as a chat message from the bot
-		  }
+
 		switch (jsonMsg) {
 		  case 'sleep':			
 			goToSleep();
