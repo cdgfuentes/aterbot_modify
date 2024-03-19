@@ -81,11 +81,11 @@ const createBot = (): void => {
 	  });
   
 	  // Listen for chat messages
-	  bot.on('chat', (username, message) => {
+	  bot.on('chat', (username, jsonMsg) => {
 		console.log('aaa');
 		//if (username === bot.username) return;
 		console.log('bbb');
-		switch (message) {
+		switch (jsonMsg) {
 		  case 'sleep':
 			bot.chat('sleeping...');
 			break;
