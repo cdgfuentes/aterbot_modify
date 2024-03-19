@@ -4,10 +4,10 @@ import CONFIG from "../config.json" assert {type: 'json'};
 import { pathfinder, Movements } from 'mineflayer-pathfinder';
 import goals from 'mineflayer-pathfinder';
 import { plugin as collectBlock } from 'mineflayer-collectblock';
+import mcData from 'minecraft-data';
 
 let loop: NodeJS.Timeout;
 let bot: Mineflayer.Bot;
-let mcData;
 
 const disconnect = (): void => {
 	clearInterval(loop);
@@ -53,9 +53,9 @@ const createBot = (): void => {
 	  // Listen for the 'spawn' event
 	  bot.once('spawn', () => {
 		defaultMove = new Movements(bot)
-		
+		const data = mcData(bot.version);
 		bot.collectBlock.chestLocations = bot.findBlocks({
-			matching: mcData.blocksByName.chest.id,
+			matching: data.blocksByName.chest.id,
 			maxDistance: 16,
 			count: 999999 // Get as many chests as we can
 		  })
