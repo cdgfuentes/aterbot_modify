@@ -150,7 +150,7 @@ const createBot = (): void => {
 	 
 	 async function stopFollow(username){
 		const target = bot.players[username] ? bot.players[username].entity : null
-			if (!target) {			
+			if (target) {			
 			return
 			}
 	 }
