@@ -53,13 +53,13 @@ const createBot = (): void => {
 	  // Listen for the 'spawn' event
 	  bot.once('spawn', () => {
 		defaultMove = new Movements(bot)
-		console.log('=== WHAT2 ===', bot.collectBlock)
-		bot.collectBlock.chestLocations = bot.findBlock({
+		
+		bot.collectBlock.chestLocations = bot.findBlocks({
 			matching: 54,
 			maxDistance: 16,
 			count: 999999 // Get as many chests as we can
 		  })
-
+		  console.log('=== WHAT2 ===', bot.collectBlock.chestLocations)
 		//bot.chat('Hello!');
 		console.log('waw', goals.goals)
 		const changePos = async (): Promise<void> => {
