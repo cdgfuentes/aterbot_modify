@@ -68,21 +68,22 @@ const createBot = (): void => {
 		console.log(`AFKBot logged in ${bot.username}\n\n`);
 	});
 
-	bot.on('chat', (username, message) => {
-		console.log('aaa')
-		if (username === bot.username) return
-		console.log('bbb')
-		switch (message) {
-		  case 'sleep':
-			bot.chat('sleeping...')
-			break
-		  case 'wakeup':
-			bot.chat('wakeup...')
-			break
-		}
-	  })
 };
 
+createBot.on('chat', (username, message) => {
+	console.log('aaa')
+	if (username === bot.username) return
+	console.log('bbb')
+	switch (message) {
+	  case 'sleep':
+		bot.chat('sleeping...')
+		break
+	  case 'wakeup':
+		bot.chat('wakeup...')
+		break
+	}
+  })
+  
 export default (): void => {
 	createBot();
 };
