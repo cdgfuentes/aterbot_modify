@@ -30,7 +30,9 @@ const createBot = (): void => {
 		port: +CONFIG.client.port,
 		username: CONFIG.client.username
 	  } as const);
-	  bot.loadPlugin(pathfinder)
+	  bot.loadPlugin(pathfinder);
+	  const collectBlock = require('mineflayer-collectblock').plugin
+	  bot.loadPlugin(collectBlock);
 	  let defaultMove: Movements;
 	  // Handle errors
 	  bot.once('error', error => {
@@ -89,9 +91,8 @@ const createBot = (): void => {
   
 	  // Listen for chat messages
 	  bot.on('chat', (username, jsonMsg) => {
-		console.log('aaa');
-		//if (username === bot.username) return;
-		console.log('bbb');
+		console.log('Chat Triggered: ', jsonMsg);
+		if (username === bot.username) return;
 		switch (jsonMsg) {
 		  case 'sleep':			
 			goToSleep();
@@ -105,11 +106,35 @@ const createBot = (): void => {
 		  case 'stop follow':
 			stopFollow(username);
 			break;
-
 		}
+		const args = jsonMsg.split(' ')
+		if (args[0] !== 'collect') return
+
+		const blockType = bot.registry.blocksByName[args[1]]
+		if (!blockType) {
+		  bot.chat("I don't know any blocks with that name.")
+		  return
+		}
+		bot.chat('Collecting the nearest ' + blockType.name)
+
+		  // Try and find that block type in the world
+		  const block = bot.findBlock({
+			matching: blockType.id,
+			maxDistance: 64
+		  })
+		
+		  if (!block) {
+			bot.chat("I don't see that block nearby.")
+			return
+		  }
+		
+		  // Collect the block if we found one
+		  bot.collectBlock.collect(block, err => {
+			if (err) bot.chat(err.message)
+		  })
+
 	  });
-
-
+	  
 	  async function goToSleep () {
 		const bed = bot.findBlock({
 		  matching: block => bot.isABed(block)
@@ -117,7 +142,7 @@ const createBot = (): void => {
 		if (bed) {
 		  try {
 			await bot.sleep(bed)
-			bot.chat("I'm sleeping")
+			bot.chat("Sleeping...")
 		  } catch (err) {
 			bot.chat(`I can't sleep, ${err.message}`)
 		  }
@@ -135,22 +160,21 @@ const createBot = (): void => {
 
 	  async function follow(username){
 		const target = bot.players[username] ? bot.players[username].entity : null
-			bot.chat(`Following: ${username}`)
+			//bot.chat(`Following: ${username}`)
 			if (!target) {
-			bot.chat('I cant see you')
+			bot.chat('I cant see you, too far.')
 			return
 			}
 			const p = target.position
 			
 			bot.pathfinder.setMovements(defaultMove)
 			const testGoal = new goals.goals.GoalFollow(target, 2)
-			//bot.pathfinder.setGoal(new goals.goals.GoalNear(p.x,p.y,p.z,1))
 			bot.pathfinder.setGoal(testGoal,true)
 	 }
 
 	 
 	 async function stopFollow(username){
-		bot.chat(`Stopped following: ${username}`)
+		//bot.chat(`Stopped following: ${username}`)
 		const target = bot.players[username] ? bot.players[username].entity : null
 			if (!target) {			
 			return
