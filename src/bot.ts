@@ -81,7 +81,7 @@ const createBot = (): void => {
 	  });
   
 
-	  console.log('=== ALOOO ===', bot.on)
+	  console.log('=== ALOOO ===', bot.on('chat'))
 	  // Listen for chat messages
 	  bot.on('chat', (username, message) => {
 		console.log('aaa');
