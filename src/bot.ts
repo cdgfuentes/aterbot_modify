@@ -44,9 +44,7 @@ const createBot = (): void => {
 
 			bot.setControlState('sprint', halfChance);
 			bot.setControlState(lastAction, true); // starts the selected random action
-                        bot.chat('/afk');
-			bot.chat('Commit test');
-			await sleep(300000);
+                        
 			await sleep(CONFIG.action.holdDuration);
 			bot.clearControlStates();
 			return;
@@ -58,10 +56,13 @@ const createBot = (): void => {
 			await bot.look(yaw, pitch, false);
 			return;
 		};
-		
+		const typeAfk = async (): Promise<void> => {
+			bot.chat('/afk');
+		};
 		loop = setInterval(() => {
 			changeView();
 			changePos();
+			typeAfk();
 		}, CONFIG.action.holdDuration);
 	});
 	bot.once('login', () => {
