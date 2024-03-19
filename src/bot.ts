@@ -135,6 +135,7 @@ const createBot = (): void => {
 
 	  async function follow(username){
 		const target = bot.players[username] ? bot.players[username].entity : null
+			bot.chat(`Following: ${username}`)
 			if (!target) {
 			bot.chat('I cant see you')
 			return
@@ -149,9 +150,9 @@ const createBot = (): void => {
 
 	 
 	 async function stopFollow(username){
-		bot.chat('HHH');
+		bot.chat(`Stopped following: ${username}`)
 		const target = bot.players[username] ? bot.players[username].entity : null
-			if (target) {			
+			if (!target) {			
 			return
 			}
 			bot.pathfinder.setGoal(null)
