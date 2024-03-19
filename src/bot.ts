@@ -152,8 +152,8 @@ const createBot = (): void => {
 		  targets.push(bot.blockAt(blocks[i]))
 		}
 
-		bot.collectBlock.collect(targets)
-
+		bot.collectBlock.collect(targets, err => {
+			if (err) bot.chat(err.message)
 	  });
 	  
 	  async function goToSleep () {
