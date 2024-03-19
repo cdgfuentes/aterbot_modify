@@ -8,6 +8,7 @@
 		"dev": "node --inspect --loader tsx ./src/index.ts"
 	},
 	"dependencies": {
+		"axios": "^1.6.8",
 		"minecraft-data": "^3.64.0",
 		"mineflayer": "^4.20.0",
 		"mineflayer-collectblock": "^1.4.1",

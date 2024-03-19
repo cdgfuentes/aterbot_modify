@@ -5,6 +5,7 @@ import { pathfinder, Movements } from 'mineflayer-pathfinder';
 import goals from 'mineflayer-pathfinder';
 import { plugin as collectBlock } from 'mineflayer-collectblock';
 import mcData from 'minecraft-data';
+import axios from 'axios';
 
 let loop: NodeJS.Timeout;
 let bot: Mineflayer.Bot;
@@ -88,9 +89,14 @@ const createBot = (): void => {
 	  });
   
 	  // Listen for chat messages
-	  bot.on('chat', (username, jsonMsg) => {
+	  bot.on('chat', async (username, jsonMsg) => {
 		console.log('Chat Triggered: ', jsonMsg);
 		if (username === bot.username) return;
+		if (jsonMsg.endsWith('??')) {
+			const userInput = jsonMsg.slice(0, -2).trim();  // Remove '??' from the message
+			const openAIResponse = await getOpenAIResponse(userInput);
+			console.log(openAIResponse);
+		  }
 		switch (jsonMsg) {
 		  case 'sleep':			
 			goToSleep();
@@ -195,6 +201,36 @@ const createBot = (): void => {
 	  // You might want to handle this error appropriately
 	}
   };  
+
+
+
+
+  async function getOpenAIResponse(message: string): Promise<string> {
+	try {
+	  const response = await axios.post('https://api.openai.com/v1/engines/davinci/completions', {
+		prompt: message,
+		max_tokens: 150,
+		temperature: 0.7,
+		top_p: 1,
+		n: 1,
+		stop: '??'  // Stop completion at ??
+	  }, {
+		headers: {
+		  'Authorization': `Bearer ${CONFIG.client.api_key}`,
+		  'Content-Type': 'application/json'
+		}
+	  });
+  
+	  if (response.data.choices && response.data.choices.length > 0) {
+		return response.data.choices[0].text.trim();
+	  } else {
+		return 'Unable to get response from OpenAI.';
+	  }
+	} catch (error) {
+	  console.error('Error calling OpenAI API:', error);
+	  return 'Error calling OpenAI API.';
+	}
+  }
 
 export default (): void => {
 	createBot();
