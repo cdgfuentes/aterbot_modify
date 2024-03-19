@@ -55,7 +55,7 @@ const createBot = (): void => {
 		defaultMove = new Movements(bot)
 		data = mcData(bot.version);
 		//console.log('===data===',data);
-		bot.collectBlock.chestLocations = bot.findBlocks({
+		bot.collectBlock.chestLocations = bot.findBlock({
 			matching: data.blocksByName.chest.id,
 			maxDistance: 16,
 			count: 999999 // Get as many chests as we can
