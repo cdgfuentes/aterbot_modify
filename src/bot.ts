@@ -62,7 +62,6 @@ const createBot = (): void => {
 		loop = setInterval(() => {
 			changeView();
 			changePos();
-			typeAfk();
 		}, CONFIG.action.holdDuration);
 	});
 	bot.once('login', () => {
