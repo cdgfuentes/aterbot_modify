@@ -129,7 +129,7 @@ const createBot = (): void => {
 		  }		  
 		  // Collect the block if we found one
 		  try{
-		  await bot.collectBlock.collect(block, err => {
+		   bot.collectBlock.collect(block, err => {
 			if (err) bot.chat(err.message)
 		  })
 		}
