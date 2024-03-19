@@ -31,6 +31,7 @@ const createBot = (): void => {
 		username: CONFIG.client.username
 	  } as const);
 	  bot.loadPlugin(pathfinder)
+	  let defaultMove: Movements;
 	  // Handle errors
 	  bot.once('error', error => {
 		console.error(`AFKBot got an error: ${error}`);
@@ -49,7 +50,7 @@ const createBot = (): void => {
   
 	  // Listen for the 'spawn' event
 	  bot.once('spawn', () => {
-		const defaultMove = new Movements(bot)
+		defaultMove = new Movements(bot)
 
 		const changePos = async (): Promise<void> => {
 		  const lastAction = getRandom(CONFIG.action.commands) as Mineflayer.ControlState;
