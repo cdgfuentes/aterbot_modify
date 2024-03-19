@@ -69,7 +69,9 @@ const createBot = (): void => {
 	});
 };
 
-
+bot.on('chat', (message) => {
+  if(message === 'test') bot.chat("/afk") 
+})
 
 export default (): void => {
 	createBot();
