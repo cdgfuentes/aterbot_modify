@@ -80,9 +80,6 @@ const createBot = (): void => {
 		console.log(`AFKBot logged in ${bot.username}\n\n`);
 	  });
   
-
-	  console.log('=== ALOOO ===', bot.on('chat', (username, message) => {
-		console.log('aaa');}))
 	  // Listen for chat messages
 	  bot.on('chat', (username, message) => {
 		console.log('aaa');
