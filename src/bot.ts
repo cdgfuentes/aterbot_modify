@@ -53,6 +53,12 @@ const createBot = (): void => {
 	  // Listen for the 'spawn' event
 	  bot.once('spawn', () => {
 		defaultMove = new Movements(bot)
+		bot.collectBlock.chestLocations = bot.findBlock({
+			matching: 54,
+			maxDistance: 16,
+			count: 999999 // Get as many chests as we can
+		  })
+
 		//bot.chat('Hello!');
 		console.log('waw', goals.goals)
 		const changePos = async (): Promise<void> => {
