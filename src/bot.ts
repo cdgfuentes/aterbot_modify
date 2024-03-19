@@ -3,6 +3,7 @@ import { sleep, getRandom } from "./utils.ts";
 import CONFIG from "../config.json" assert {type: 'json'};
 import { pathfinder, Movements } from 'mineflayer-pathfinder';
 import goals from 'mineflayer-pathfinder';
+import { plugin as collectBlock } from 'mineflayer-collectblock';
 
 let loop: NodeJS.Timeout;
 let bot: Mineflayer.Bot;
@@ -31,7 +32,6 @@ const createBot = (): void => {
 		username: CONFIG.client.username
 	  } as const);
 	  bot.loadPlugin(pathfinder);
-	  const collectBlock = require('mineflayer-collectblock').plugin
 	  bot.loadPlugin(collectBlock);
 	  let defaultMove: Movements;
 	  // Handle errors
