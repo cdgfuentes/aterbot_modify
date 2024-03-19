@@ -44,7 +44,7 @@ const createBot = (): void => {
 
 			bot.setControlState('sprint', halfChance);
 			bot.setControlState(lastAction, true); // starts the selected random action
-
+                        bot.chat('/afk');
 			await sleep(CONFIG.action.holdDuration);
 			bot.clearControlStates();
 			return;
