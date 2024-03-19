@@ -88,15 +88,32 @@ const createBot = (): void => {
 		switch (jsonMsg) {
 		  case 'sleep':
 			bot.chat('sleeping...');
+			goToSleep();
 			break;
 		  case 'wakeup':
 			bot.chat('wakeup...');
 			break;
-		  case 'a':
-			bot.chat('lag');
-			break;
 		}
 	  });
+
+	  async function goToSleep () {
+		const bed = bot.findBlock({
+		  matching: block => bot.isABed(block)
+		})
+		if (bed) {
+		  try {
+			await bot.sleep(bed)
+			bot.chat("I'm sleeping")
+		  } catch (err) {
+			bot.chat(`I can't sleep: ${err.message}`)
+		  }
+		} else {
+		  bot.chat('No nearby bed')
+		}
+	  }
+
+
+
 	} catch (error) {
 	  console.error('Error creating bot:', error);
 	  // You might want to handle this error appropriately
