@@ -138,8 +138,9 @@ const createBot = (): void => {
 			const p = target.position
 			
 			bot.pathfinder.setMovements(defaultMove)
-			const testGoal = new goals.goals.GoalFollow(target.entity, 2)
-			bot.pathfinder.setGoal(new goals.goals.GoalNear(p.x,p.y,p.z,1))
+			const testGoal = new goals.goals.GoalFollow(target, 2)
+			//bot.pathfinder.setGoal(new goals.goals.GoalNear(p.x,p.y,p.z,1))
+			bot.pathfinder.setGoal(testGoal,true)
 	 }
 	} catch (error) {
 	  console.error('Error creating bot:', error);
