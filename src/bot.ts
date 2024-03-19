@@ -128,13 +128,9 @@ const createBot = (): void => {
 			return
 		  }		  
 		  // Collect the block if we found one
-		  try{
-		   bot.collectBlock.collect(block, err => {
+		   bot.collectBlock.collect(blockType.name, err => {
 			if (err) bot.chat(err.message)
-		  })
-		}catch{
-			
-		}
+		  })	
 	  });
 	  
 	  async function goToSleep () {
