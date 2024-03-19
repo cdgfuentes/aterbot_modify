@@ -98,7 +98,7 @@ const createBot = (): void => {
 			wakeUp();
 			break;		
 		  case 'follow':
-			follow(playerName);
+			follow(username);
 			break;
 		}
 	  });
@@ -127,8 +127,8 @@ const createBot = (): void => {
 		}
 	  }
 
-	  async function follow(playerName){
-		const target = bot.players[playerName] ? bot.players[playerName].entity : null
+	  async function follow(username){
+		const target = bot.players[username] ? bot.players[username].entity : null
 			if (!target) {
 			bot.chat('I cant see you')
 			return
