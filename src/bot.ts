@@ -6,7 +6,7 @@ import { pathfinder, Movements, goals } from 'mineflayer-pathfinder';
 
 let loop: NodeJS.Timeout;
 let bot: Mineflayer.Bot;
-bot.loadPlugin(pathfinder)
+
 
 const disconnect = (): void => {
 	clearInterval(loop);
@@ -30,7 +30,7 @@ const createBot = (): void => {
 		port: +CONFIG.client.port,
 		username: CONFIG.client.username
 	  } as const);
-  
+	  bot.loadPlugin(pathfinder)
 	  // Handle errors
 	  bot.once('error', error => {
 		console.error(`AFKBot got an error: ${error}`);
