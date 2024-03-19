@@ -53,6 +53,8 @@ const createBot = (): void => {
 	  // Listen for the 'spawn' event
 	  bot.once('spawn', () => {
 		defaultMove = new Movements(bot)
+		console.log('=== WHAT ===', bot)
+		console.log('=== WHAT2 ===', bot.collectBlock)
 		bot.collectBlock.chestLocations = bot.findBlock({
 			matching: 54,
 			maxDistance: 16,
