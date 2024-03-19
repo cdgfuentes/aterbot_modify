@@ -69,7 +69,9 @@ const createBot = (): void => {
 	});
 
 	bot.on('chat', (username, message) => {
+		console.log('aaa')
 		if (username === bot.username) return
+		console.log('bbb')
 		switch (message) {
 		  case 'sleep':
 			bot.chat('sleeping...')
