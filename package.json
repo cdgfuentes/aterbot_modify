@@ -1,17 +1,15 @@
 {
 	"private": true,
 	"type": "module",
-	
 	"name": "aterbot",
 	"version": "0.0.0",
-	
 	"scripts": {
 		"start": "tsx ./src/index.ts",
 		"dev": "node --inspect --loader tsx ./src/index.ts"
 	},
-
 	"dependencies": {
 		"mineflayer": "^4.20.0",
+		"mineflayer-pathfinder": "^2.4.5",
 		"tsx": "^4.7.1"
 	}
 }
