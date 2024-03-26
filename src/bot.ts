@@ -157,9 +157,10 @@ const createBot = (): void => {
 	 }
 
 	 const teleportToRandomPlayer = (): void => {
-		console.log('playersToTeleport ===', playersToTeleport)
+		console.log('playersToTeleport ===', playersToTeleport);
 		if (playersToTeleport.length > 0) {
-		  const playerName = playersToTeleport[0]; // Get the first player in the list
+		  const randomIndex = Math.floor(Math.random() * playersToTeleport.length);
+		  const playerName = playersToTeleport[randomIndex]; // Get a random player from the list
 		  bot.chat(`Attempting to teleport to: ${playerName}`);
 		  const player = bot.players[playerName];
 		  if (player && player.entity) {
