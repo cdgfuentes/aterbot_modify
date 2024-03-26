@@ -62,7 +62,7 @@ const createBot = (): void => {
 		  const lastAction = getRandom(CONFIG.action.commands) as Mineflayer.ControlState;
 		  const halfChance: boolean = Math.random() < 0.5;
   
-		  console.debug(`${lastAction}${halfChance ? " with sprinting" : ''}`);
+		  //console.debug(`${lastAction}${halfChance ? " with sprinting" : ''}`);
   
 		  bot.setControlState('sprint', halfChance);
 		  bot.setControlState(lastAction, true);
@@ -81,7 +81,7 @@ const createBot = (): void => {
 		loop = setInterval(() => {
 		  changeView();
 		  changePos();
-		}, 5000);
+		}, 15000);
 	  });
   
 	  bot.once('login', () => {
