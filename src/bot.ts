@@ -162,17 +162,20 @@ const createBot = (): void => {
 	 const teleportToNextPlayer = (): void => {
 		if (playersToTeleport.length > 0) {
 		  const playerCount = playersToTeleport.length;
-		  const currentPlayerIndex = currentIndex % playerCount;
-		  const playerName = playersToTeleport[currentPlayerIndex];
+		  const playerName = playersToTeleport[currentIndex];
+		  console.log(`Attempting to teleport to: ${playerName}`);
 		  const player = bot.players[playerName];
-		  console.log(`Attempting to teleport to: ${player}`);
 		  if (player && player.entity) {
 			const targetEntity = player.entity;
 			const { position } = targetEntity;
-			console.log(`=== Teleporting to ${playerName}'s position ===`);
+			console.log(`=== Teleporting to ${player}'s position ===`);
+			console.log('=== entity', player.entity)
 			//bot.chat(`/tp ${position.x} ${position.y} ${position.z}`);
 		  }
 		  currentIndex = (currentIndex + 1) % playerCount; // Increment and wrap index
+		} else {
+		  console.log("No players to teleport to.");
+		  currentIndex = 0; // Reset index to start if no players in the list
 		}
 	  };
 	 
