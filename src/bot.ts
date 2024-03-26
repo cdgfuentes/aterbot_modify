@@ -165,7 +165,7 @@ const createBot = (): void => {
 			bot.chat(`Attempting to teleport to: ${playerName}`);
 			bot.chat(`/tp ${bot.username} ${playerName}`);
 			if (i < playersToTeleport.length - 1) {
-			  await new Promise(resolve => setTimeout(resolve, 5000)); // 5000 milliseconds = 5 seconds
+			  await new Promise(resolve => setTimeout(resolve, 30000)); // 5000 milliseconds = 5 seconds
 			}
 		  }
 		}
@@ -179,10 +179,7 @@ const createBot = (): void => {
 	 
 	 bot.on('spawn', () => {
 	   updatePlayersList(); // Initial update when the bot spawns
-	 
-	   setInterval(() => {
-		teleportToPlayers();
-	   }, 4000); // Adjust the interval as needed (e.g., teleport every 4 seconds)
+	   teleportToPlayers();
 	 });
 	 
 	 // Listen for player joins
