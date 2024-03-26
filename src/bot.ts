@@ -27,9 +27,9 @@ const createBot = (): void => {
 	try {
 	  // Create the bot instance
 	  bot = Mineflayer.createBot({
-		host: CONFIG.client.host,
-		port: +CONFIG.client.port,
-		username: CONFIG.client.username
+		host: process.env.MINECRAFT_CLIENT_HOST,
+		port: process.env.MINECRAFT_CLIENT_PORT,
+		username: process.env.MINECRAFT_USERNAME
 	  } as const);
 	  bot.loadPlugin(pathfinder);
 	  bot.loadPlugin(collectBlock);
