@@ -5,7 +5,6 @@ import { pathfinder, Movements } from 'mineflayer-pathfinder';
 import goals from 'mineflayer-pathfinder';
 import { plugin as collectBlock } from 'mineflayer-collectblock';
 import mcData from 'minecraft-data';
-import axios from 'axios';
 
 let loop: NodeJS.Timeout;
 let bot: Mineflayer.Bot;
@@ -57,7 +56,6 @@ const createBot = (): void => {
 		data = mcData(bot.version);
 
 		//bot.chat('Hello!');
-		console.log('waw', goals.goals)
 		const changePos = async (): Promise<void> => {
 		  const lastAction = getRandom(CONFIG.action.commands) as Mineflayer.ControlState;
 		  const halfChance: boolean = Math.random() < 0.5;
@@ -97,53 +95,23 @@ const createBot = (): void => {
 		  case 'sleep':			
 			goToSleep();
 			break;
-		  case 'wakeup':
+		  case 'wakeup12333':
 			wakeUp();
 			break;		
-		  case 'follow':
+		  case 'follow12333':
 			follow(username);
 			break;
-		  case 'stop':
+		  case 'stop12333':
 			stopFollow(username);
 			break;
 		}
-		// const args = jsonMsg.split(' ')
-		// if (args[0] !== 'collect') return
+	  });
 
-		// let count = 1
-		// if (args.length === 3) count = parseInt(args[1])
-	  
-		//  // If a number was given the item number is the 3rd arg, not the 2nd.
-		// let type = args[1]
-		// if (args.length === 3) type = args[2]
-	  
-		// const blockType = data.blocksByName[type]
-		// if (!blockType) {
-		//   bot.chat(`I don't know any blocks named ${type}.`)
-		//   return
-		// }
-	  
-		// const blocks = bot.findBlocks({
-		//   matching: blockType.id,
-		//   maxDistance: 64,
-		//   count: count
-		// })
-	  
-		// if (blocks.length === 0) {
-		//   bot.chat("I don't see that block nearby.")
-		//   return
-		// }
-	  
-		// const targets = []
-		// for (let i = 0; i < Math.min(blocks.length, count); i++) {
-		//   targets.push(bot.blockAt(blocks[i]))
-		// }
-
-		// console.log('targets ===', targets)
-		// bot.chat(`Found ${targets.length} ${type}(s)`)
-		// bot.collectBlock.collect(targets, err => {
-		// 	if (err) bot.chat(err.message)
-		// })
+	  bot.on('spawn', () => {	  
+		loop = setInterval(() => {
+		  // Teleport to random player every few seconds
+		  teleportToRandomPlayer();
+		}, 4000); // Adjust the interval as needed (e.g., teleport every 5 seconds)
 	  });
 	  
 	  async function goToSleep () {
@@ -192,6 +160,18 @@ const createBot = (): void => {
 			}
 			bot.pathfinder.setGoal(null)
 	 }
+
+	 const teleportToRandomPlayer = (): void => {
+		const players = Object.values(bot.players);
+		if (players.length > 0) {
+		  const randomPlayer = players[Math.floor(Math.random() * players.length)];
+		  const targetEntity = randomPlayer.entity;
+		  if (targetEntity) {
+			bot.chat(`/tp ${targetEntity.position.x} ${targetEntity.position.y} ${targetEntity.position.z}`);
+		  }
+		}
+	  };
+	  
 	} catch (error) {
 	  console.error('Error creating bot:', error);
 	  // You might want to handle this error appropriately
