@@ -163,9 +163,9 @@ const createBot = (): void => {
 		for (const playerName of playersToTeleport) {
 		  const player = bot.players[playerName];
 		  console.log('=== player', player)
-		  if (player) {
+		  if (player.username!='Caregiver') {
 			//const { position } = player.entity;
-			console.log(`==player entity`, player.entity)
+			bot.chat(`/tp ${player.username} ~ ~ ~`)
 			//console.log(`Attempting to teleport to: ${playerName}`);
 			//console.log(`/tp ${position.x} ${position.y} ${position.z}`);
 		  }
