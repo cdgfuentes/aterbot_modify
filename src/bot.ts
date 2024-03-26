@@ -162,10 +162,12 @@ const createBot = (): void => {
 		if (playersToTeleport.length > 0) {
 		  let playerName = playersToTeleport[currentIndex];
 		  let player = bot.players[playerName];
+		  console.log('=== player ===', player)
+		  console.log('=== player.entity ===', player.entity)
 		  if (player && player.entity) {
 			let targetEntity = player.entity;
 			let { position } = targetEntity;
-			console.log('=== player target entity ===', targetEntity);
+			//console.log('=== player target entity ===', targetEntity);
 	  
 			// Check if the new position is different from the last known position
 			if (
@@ -173,8 +175,8 @@ const createBot = (): void => {
 			  position.y !== lastKnownPosition.y ||
 			  position.z !== lastKnownPosition.z
 			) {
-			  console.log(`Attempting to teleport to: ${playerName}`);
-			  bot.chat(`/tp ${position.x} ${position.y} ${position.z}`);
+			  //console.log(`Attempting to teleport to: ${playerName}`);
+			  //bot.chat(`/tp ${position.x} ${position.y} ${position.z}`);
 			  lastKnownPosition = position; // Update last known position
 			} else {
 			  console.log('Position did not change. Proceeding to the next player.');
@@ -190,7 +192,6 @@ const createBot = (): void => {
 	   const players = Object.values(bot.players);
 	   playersToTeleport = players.map(player => player.username);
 	   bot.chat(`Player list: ${playersToTeleport}`)
-	   console.log('=== playersToTeleport', playersToTeleport)
 	 };
 	 
 	 bot.on('spawn', () => {
