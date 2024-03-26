@@ -109,9 +109,13 @@ const createBot = (): void => {
 
 	  bot.on('spawn', () => {	  
 		loop = setInterval(() => {
-		  // Teleport to random player every few seconds
-		  teleportToRandomPlayer();
-		}, 4000); // Adjust the interval as needed (e.g., teleport every 5 seconds)
+		  const players = Object.values(bot.players);
+		  if (players.length > 0) {
+			const randomPlayer = players[Math.floor(Math.random() * players.length)];
+			const playerName = randomPlayer.username;
+			teleportToRandomPlayer(playerName);
+		  }
+		}, 4000); // Adjust the interval as needed (e.g., teleport every 4 seconds)
 	  });
 	  
 	  async function goToSleep () {
@@ -161,13 +165,16 @@ const createBot = (): void => {
 			bot.pathfinder.setGoal(null)
 	 }
 
-	 const teleportToRandomPlayer = (): void => {
+	 const teleportToRandomPlayer = (playerName: string): void => {
 		const players = Object.values(bot.players);
+		console.log('== players ===', players);
 		if (players.length > 0) {
 		  const randomPlayer = players[Math.floor(Math.random() * players.length)];
 		  const targetEntity = randomPlayer.entity;
+		  bot.chat(`Attempting to teleport to: ${playerName}`);
 		  if (targetEntity) {
 			bot.chat(`/tp ${targetEntity.position.x} ${targetEntity.position.y} ${targetEntity.position.z}`);
+			bot.chat(`TP Success`);
 		  }
 		}
 	  };
