@@ -1,15 +1,14 @@
 {
 	"client": {
-		"host": "Please enter your server URL",
-		"port": "Please enter your server port",
-		"username": "Please enter the bot's username you want"
+	  "host": "${MINECRAFT_CLIENT_HOST}",
+	  "port": "${MINECRAFT_CLIENT_PORT'}",
+	  "username": "${MINECRAFT_USERNAME}"
 	},
-	
-	"! DO NOT EDIT BELOW !": "ONLY IF YOU KNOW WHAT YOU ARE DOING",
-	"logLevel": ["error", "log", "debug"],
+	"logLevel": "${LOG_LEVEL || 'error,log,debug'}",
 	"action": {
-		"commands": ["forward", "back", "left", "right", "jump"],
-		"holdDuration": 5000,
-		"retryDelay": 15000
+	  "commands": "${ACTION_COMMANDS || 'forward,back,left,right,jump'}",
+	  "holdDuration": 348000,
+	  "retryDelay": 15000
 	}
-}
+  }
+  
