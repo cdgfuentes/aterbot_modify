@@ -157,17 +157,17 @@ const createBot = (): void => {
 	 }
 
 	 const teleportToRandomPlayer = (): void => {
-		console.log('=== playersToTeleport ===', playersToTeleport)
-	   if (playersToTeleport.length > 0) {
-		 const playerName = playersToTeleport.shift(); // Take the first player from the list
-		 bot.chat(`Attempting to teleport to: ${playerName}`);
-		 const player = bot.players[playerName];
-		 if (player && player.entity) {
-		   const targetEntity = player.entity;
-		   bot.chat(`/tp ${targetEntity.position.x} ${targetEntity.position.y} ${targetEntity.position.z}`);
-		 }
-	   }
-	 };
+		if (playersToTeleport.length > 0) {
+		  const playerName = playersToTeleport[0]; // Get the first player in the list
+		  bot.chat(`Attempting to teleport to: ${playerName}`);
+		  const player = bot.players[playerName];
+		  if (player && player.entity) {
+			const targetEntity = player.entity;
+			bot.chat(`/tp ${targetEntity.position.x} ${targetEntity.position.y} ${targetEntity.position.z}`);
+		  }
+		}
+	  };
+	  
 	 
 	 const updatePlayersList = (): void => {
 	   const players = Object.values(bot.players);
