@@ -34,6 +34,8 @@ const createBot = (): void => {
 	  bot.loadPlugin(pathfinder);
 	  bot.loadPlugin(collectBlock);
 	  let defaultMove: Movements;
+	  let playersToTeleport: string[] = [];
+
 	  // Handle errors
 	  bot.once('error', error => {
 		console.error(`AFKBot got an error: ${error}`);
@@ -106,17 +108,6 @@ const createBot = (): void => {
 			break;
 		}
 	  });
-
-	  bot.on('spawn', () => {	  
-		loop = setInterval(() => {
-		  const players = Object.values(bot.players);
-		  if (players.length > 0) {
-			const randomPlayer = players[Math.floor(Math.random() * players.length)];
-			const playerName = randomPlayer.username;
-			teleportToRandomPlayer(playerName);
-		  }
-		}, 4000); // Adjust the interval as needed (e.g., teleport every 4 seconds)
-	  });
 	  
 	  async function goToSleep () {
 		const bed = bot.findBlock({
@@ -165,19 +156,41 @@ const createBot = (): void => {
 			bot.pathfinder.setGoal(null)
 	 }
 
-	 const teleportToRandomPlayer = (playerName: string): void => {
-		const players = Object.values(bot.players);
-		console.log('== players ===', players);
-		if (players.length > 0) {
-		  const randomPlayer = players[Math.floor(Math.random() * players.length)];
-		  const targetEntity = randomPlayer.entity;
-		  bot.chat(`Attempting to teleport to: ${playerName}`);
-		  if (targetEntity) {
-			bot.chat(`/tp ${targetEntity.position.x} ${targetEntity.position.y} ${targetEntity.position.z}`);
-			bot.chat(`TP Success`);
-		  }
-		}
-	  };
+	 const teleportToRandomPlayer = (): void => {
+		console.log('=== playersToTeleport ===', playersToTeleport)
+	   if (playersToTeleport.length > 0) {
+		 const playerName = playersToTeleport.shift(); // Take the first player from the list
+		 bot.chat(`Attempting to teleport to: ${playerName}`);
+		 const player = bot.players[playerName];
+		 if (player && player.entity) {
+		   const targetEntity = player.entity;
+		   bot.chat(`/tp ${targetEntity.position.x} ${targetEntity.position.y} ${targetEntity.position.z}`);
+		 }
+	   }
+	 };
+	 
+	 const updatePlayersList = (): void => {
+	   const players = Object.values(bot.players);
+	   playersToTeleport = players.map(player => player.username);
+	 };
+	 
+	 bot.on('spawn', () => {
+	   updatePlayersList(); // Initial update when the bot spawns
+	 
+	   loop = setInterval(() => {
+		 teleportToRandomPlayer();
+	   }, 4000); // Adjust the interval as needed (e.g., teleport every 4 seconds)
+	 });
+	 
+	 // Listen for player joins
+	 bot.on('playerJoined', (player) => {
+	   updatePlayersList(); // Update the list when a new player joins
+	 });
+	 
+	 // Listen for player leaves
+	 bot.on('playerLeft', (player) => {
+	   updatePlayersList(); // Update the list when a player leaves
+	 });
 	  
 	} catch (error) {
 	  console.error('Error creating bot:', error);
