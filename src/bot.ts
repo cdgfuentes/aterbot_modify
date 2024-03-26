@@ -161,7 +161,6 @@ const createBot = (): void => {
 	 const teleportToNextPlayer = (): void => {
 		if (playersToTeleport.length > 0) {
 		  let playerName = playersToTeleport[currentIndex];
-		  bot.chat(`Attempting to teleport to: ${playerName}`);
 		  let player = bot.players[playerName];
 		  if (player && player.entity) {
 			let targetEntity = player.entity;
@@ -174,6 +173,7 @@ const createBot = (): void => {
 			  position.y !== lastKnownPosition.y ||
 			  position.z !== lastKnownPosition.z
 			) {
+			  console.log(`Attempting to teleport to: ${playerName}`);
 			  bot.chat(`/tp ${position.x} ${position.y} ${position.z}`);
 			  lastKnownPosition = position; // Update last known position
 			} else {
