@@ -94,7 +94,7 @@ const createBot = (): void => {
 		if (username === bot.username) return;
 
 		switch (jsonMsg) {
-		  case 'sleep':			
+		  case 'sleep112233441':			
 			goToSleep();
 			break;
 		  case 'wakeup12333':
@@ -163,7 +163,7 @@ const createBot = (): void => {
 			const playerName = playersToTeleport[i];
 			const player = bot.players[playerName];
 			if (player) {
-			  bot.chat(`Attempting to teleport to: ${playerName}`);
+			  //bot.chat(`Attempting to teleport to: ${playerName}`);
 			  bot.chat(`/tp ${bot.username} ${playerName}`);
 			  await new Promise(resolve => setTimeout(resolve, 15000)); // 15000 milliseconds = 15 seconds
 			}
@@ -178,8 +178,7 @@ const createBot = (): void => {
 	 
 	 const updatePlayersList = (): void => {
 	   const players = Object.values(bot.players);
-	   playersToTeleport = players.map(player => player.username);
-	   console.log(`Player list: ${playersToTeleport}`)
+	   playersToTeleport = players.map(player => player.username);	   
 	 };
 	 
 	 // Listen for player joins
