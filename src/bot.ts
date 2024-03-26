@@ -157,6 +157,7 @@ const createBot = (): void => {
 	 }
 
 	 const teleportToRandomPlayer = (): void => {
+		console.log('playersToTeleport ===', playersToTeleport)
 		if (playersToTeleport.length > 0) {
 		  const playerName = playersToTeleport[0]; // Get the first player in the list
 		  bot.chat(`Attempting to teleport to: ${playerName}`);
@@ -172,6 +173,8 @@ const createBot = (): void => {
 	 const updatePlayersList = (): void => {
 	   const players = Object.values(bot.players);
 	   playersToTeleport = players.map(player => player.username);
+	   bot.chat(`Player list: ${playersToTeleport}`)
+	   console.log('=== playersToTeleport', playersToTeleport)
 	 };
 	 
 	 bot.on('spawn', () => {
