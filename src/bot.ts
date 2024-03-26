@@ -165,7 +165,7 @@ const createBot = (): void => {
 		  console.log('=== player', player)
 		  if (player.username!='Caregiver') {
 			//const { position } = player.entity;
-			bot.chat(`/tp ${player.username} ~ ~ ~`)
+			bot.chat(`/tp ${bot.username} ${player.username}`)
 			//console.log(`Attempting to teleport to: ${playerName}`);
 			//console.log(`/tp ${position.x} ${position.y} ${position.z}`);
 		  }
