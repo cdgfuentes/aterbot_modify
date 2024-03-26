@@ -35,8 +35,6 @@ const createBot = (): void => {
 	  bot.loadPlugin(collectBlock);
 	  let defaultMove: Movements;
 	  let playersToTeleport: string[] = [];
-	  let currentIndex = 0; // Initialize the index variable
-	  let lastKnownPosition = { x: 0, y: 0, z: 0 }; // Initialize with default coordinates
 
 	  // Handle errors
 	  bot.once('error', error => {
@@ -162,12 +160,9 @@ const createBot = (): void => {
 	 const teleportToPlayers = (): void => {
 		for (const playerName of playersToTeleport) {
 		  const player = bot.players[playerName];
-		  console.log('=== player', player)
-		  if (player.username!='Caregiver') {
-			//const { position } = player.entity;
-			bot.chat(`/tp ${bot.username} ${player.username}`)
-			//console.log(`Attempting to teleport to: ${playerName}`);
-			//console.log(`/tp ${position.x} ${position.y} ${position.z}`);
+		  if (player) {
+			bot.chat(`Attempting to teleport to: ${playerName}`);
+			bot.chat(`/tp ${bot.username} ${playerName}`);
 		  }
 		}
 	  };
