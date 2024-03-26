@@ -36,6 +36,7 @@ const createBot = (): void => {
 	  let defaultMove: Movements;
 	  let playersToTeleport: string[] = [];
 	  let currentIndex = 0; // Initialize the index variable
+	  let lastKnownPosition = { x: 0, y: 0, z: 0 }; // Initialize with default coordinates
 
 	  // Handle errors
 	  bot.once('error', error => {
@@ -159,18 +160,27 @@ const createBot = (): void => {
 
 	 const teleportToNextPlayer = (): void => {
 		if (playersToTeleport.length > 0) {
-		  const playerName = playersToTeleport[currentIndex];
+		  let playerName = playersToTeleport[currentIndex];
 		  bot.chat(`Attempting to teleport to: ${playerName}`);
-		  const player = bot.players[playerName];
-		  console.log('=== player ===', player)
+		  let player = bot.players[playerName];
 		  if (player && player.entity) {
-			const targetEntity = player.entity;
-			const { position } = targetEntity;
-			console.log('=== player target entity ===', targetEntity)
-			//bot.chat(`/tp ${position.x} ${position.y} ${position.z}`);
+			let targetEntity = player.entity;
+			let { position } = targetEntity;
+			console.log('=== player target entity ===', targetEntity);
+	  
+			// Check if the new position is different from the last known position
+			if (
+			  position.x !== lastKnownPosition.x ||
+			  position.y !== lastKnownPosition.y ||
+			  position.z !== lastKnownPosition.z
+			) {
+			  bot.chat(`/tp ${position.x} ${position.y} ${position.z}`);
+			  lastKnownPosition = position; // Update last known position
+			} else {
+			  console.log('Position did not change. Proceeding to the next player.');
+			}
 		  }
 	  
-		  // Increment the index or reset to 0 if reached the end of the list
 		  currentIndex = (currentIndex + 1) % playersToTeleport.length;
 		}
 	  };
