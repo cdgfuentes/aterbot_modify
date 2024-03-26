@@ -158,21 +158,22 @@ const createBot = (): void => {
 
 
 	 const teleportToPlayers = async (): Promise<void> => {
-		for (let i = 0; i < playersToTeleport.length; i++) {
-		  const playerName = playersToTeleport[i];
-		  const player = bot.players[playerName];
-		  if (player) {
-			bot.chat(`Attempting to teleport to: ${playerName}`);
-			bot.chat(`/tp ${bot.username} ${playerName}`);
-			await new Promise(resolve => setTimeout(resolve, 15000)); // 5000 milliseconds = 5 seconds
+		while (true) { // Infinite loop
+		  for (let i = 0; i < playersToTeleport.length; i++) {
+			const playerName = playersToTeleport[i];
+			const player = bot.players[playerName];
+			if (player) {
+			  bot.chat(`Attempting to teleport to: ${playerName}`);
+			  bot.chat(`/tp ${bot.username} ${playerName}`);
+			  await new Promise(resolve => setTimeout(resolve, 15000)); // 15000 milliseconds = 15 seconds
+			}
 		  }
 		}
 	  };
 	  
 	  bot.on('spawn', () => {
-		setInterval(() => {
-		  teleportToPlayers();
-		}, 15000); // Adjust the interval as needed (e.g., teleport every 15 seconds)
+		updatePlayersList(); 		
+		teleportToPlayers();		
 	  });
 	 
 	 const updatePlayersList = (): void => {
