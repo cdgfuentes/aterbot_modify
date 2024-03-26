@@ -157,12 +157,16 @@ const createBot = (): void => {
 	 }
 
 
-	 const teleportToPlayers = (): void => {
-		for (const playerName of playersToTeleport) {
+	 const teleportToPlayers = async (): Promise<void> => {
+		for (let i = 0; i < playersToTeleport.length; i++) {
+		  const playerName = playersToTeleport[i];
 		  const player = bot.players[playerName];
 		  if (player) {
 			bot.chat(`Attempting to teleport to: ${playerName}`);
 			bot.chat(`/tp ${bot.username} ${playerName}`);
+			if (i < playersToTeleport.length - 1) {
+			  await new Promise(resolve => setTimeout(resolve, 5000)); // 5000 milliseconds = 5 seconds
+			}
 		  }
 		}
 	  };
