@@ -162,10 +162,12 @@ const createBot = (): void => {
 		  const playerName = playersToTeleport[currentIndex];
 		  bot.chat(`Attempting to teleport to: ${playerName}`);
 		  const player = bot.players[playerName];
+		  console.log('=== player ===', player)
 		  if (player && player.entity) {
 			const targetEntity = player.entity;
 			const { position } = targetEntity;
-			bot.chat(`/tp ${position.x} ${position.y} ${position.z}`);
+			console.log('=== player target entity ===', targetEntity)
+			//bot.chat(`/tp ${position.x} ${position.y} ${position.z}`);
 		  }
 	  
 		  // Increment the index or reset to 0 if reached the end of the list
@@ -184,7 +186,7 @@ const createBot = (): void => {
 	 bot.on('spawn', () => {
 	   updatePlayersList(); // Initial update when the bot spawns
 	 
-	   loop = setInterval(() => {
+	   setInterval(() => {
 		teleportToNextPlayer();
 	   }, 4000); // Adjust the interval as needed (e.g., teleport every 4 seconds)
 	 });
