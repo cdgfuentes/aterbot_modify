@@ -35,6 +35,7 @@ const createBot = (): void => {
 	  bot.loadPlugin(collectBlock);
 	  let defaultMove: Movements;
 	  let playersToTeleport: string[] = [];
+	  let currentIndex = 0; // Initialize the index variable
 
 	  // Handle errors
 	  bot.once('error', error => {
@@ -156,17 +157,19 @@ const createBot = (): void => {
 			bot.pathfinder.setGoal(null)
 	 }
 
-	 const teleportToRandomPlayer = (): void => {
-		console.log('playersToTeleport ===', playersToTeleport);
+	 const teleportToNextPlayer = (): void => {
 		if (playersToTeleport.length > 0) {
-		  const randomIndex = Math.floor(Math.random() * playersToTeleport.length);
-		  const playerName = playersToTeleport[randomIndex]; // Get a random player from the list
+		  const playerName = playersToTeleport[currentIndex];
 		  bot.chat(`Attempting to teleport to: ${playerName}`);
 		  const player = bot.players[playerName];
 		  if (player && player.entity) {
 			const targetEntity = player.entity;
-			bot.chat(`/tp ${targetEntity.position.x} ${targetEntity.position.y} ${targetEntity.position.z}`);
+			const { position } = targetEntity;
+			bot.chat(`/tp ${position.x} ${position.y} ${position.z}`);
 		  }
+	  
+		  // Increment the index or reset to 0 if reached the end of the list
+		  currentIndex = (currentIndex + 1) % playersToTeleport.length;
 		}
 	  };
 	  
@@ -182,7 +185,7 @@ const createBot = (): void => {
 	   updatePlayersList(); // Initial update when the bot spawns
 	 
 	   loop = setInterval(() => {
-		 teleportToRandomPlayer();
+		teleportToNextPlayer();
 	   }, 4000); // Adjust the interval as needed (e.g., teleport every 4 seconds)
 	 });
 	 
