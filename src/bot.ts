@@ -15,10 +15,10 @@ const disconnect = (): void => {
 	bot?.end?.();
 };
 const reconnect = async (): Promise<void> => {
-	console.log(`Trying to reconnect in ${CONFIG.action.retryDelay / 1000} seconds...\n`);
+	console.log(`Trying to reconnect in ${15000 / 1000} seconds...\n`);
 
 	disconnect();
-	await sleep(CONFIG.action.retryDelay);
+	await sleep(15000);
 	createBot();
 	return;
 };
@@ -67,7 +67,7 @@ const createBot = (): void => {
 		  bot.setControlState('sprint', halfChance);
 		  bot.setControlState(lastAction, true);
   
-		  await sleep(CONFIG.action.holdDuration);
+		  await sleep(process.env.HOLD_DURATION);
 		  bot.clearControlStates();
 		};
   
@@ -81,7 +81,7 @@ const createBot = (): void => {
 		loop = setInterval(() => {
 		  changeView();
 		  changePos();
-		}, CONFIG.action.holdDuration);
+		}, 5000);
 	  });
   
 	  bot.once('login', () => {
