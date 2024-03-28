@@ -162,10 +162,18 @@ const createBot = (): void => {
 		  for (let i = 0; i < playersToTeleport.length; i++) {
 			const playerName = playersToTeleport[i];
 			const player = bot.players[playerName];
-			if (player) {
-			  //bot.chat(`Attempting to teleport to: ${playerName}`);
-			  bot.chat(`/tp ${bot.username} ${playerName}`);
-			  await new Promise(resolve => setTimeout(resolve, 15000)); // 15000 milliseconds = 15 seconds
+			if (player && playerName !== bot.username) {
+			  // Check if player object is not null or undefined
+			  if (player.username) {
+				bot.chat(`/tp ${bot.username} ${playerName}`);
+				await new Promise(resolve => setTimeout(resolve, 15000)); // 15000 milliseconds = 15 seconds
+			  } else {
+				console.log(`Player ${playerName} is missing username property.`);
+				// Handle the error or continue to the next player
+			  }
+			} else {
+			  console.log(`Player ${playerName} is undefined or bot's username.`);
+			  // Handle the error or continue to the next player
 			}
 		  }
 		}
